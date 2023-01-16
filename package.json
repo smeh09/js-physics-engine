@@ -1,0 +1,24 @@
+{
+  "name": "js-physics-engine",
+  "version": "1.0.0",
+  "description": "A physics engine made in javascript that supports polygon to polygon and polygon to circle collisions, with spring physics and stuff.",
+  "main": "Index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smeh09/js-physics-engine.git"
+  },
+  "keywords": [
+    "js",
+    "physics",
+    "game-dev"
+  ],
+  "author": "smeh09",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smeh09/js-physics-engine/issues"
+  },
+  "homepage": "https://github.com/smeh09/js-physics-engine#readme"
+}
