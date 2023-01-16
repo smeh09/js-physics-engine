@@ -19,6 +19,9 @@ class RigidBodyBox
   
   InitBox ()
   {
+    this.TransformedPoints = [];
+    this.OriginalPoints = [];
+    
     this.TransformedPoints.push(
       new Vector2(this.Position.x, this.Position.y),
       new Vector2(this.Position.x + this.Width, this.Position.y),

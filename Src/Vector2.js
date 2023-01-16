@@ -8,14 +8,18 @@ class Vector2
 
   Add(vector)
   {
-    this.x += vector.x;
-    this.y += vector.y;
+    return new Vector2(
+      this.x + vector.x,
+      this.y + vector.y
+    );
   }
 
   Subtract(vector)
   {
-    this.x -= vector.x;
-    this.y -= vector.y;
+    return new Vector2(
+      this.x - vector.x,
+      this.y - vector.y
+    );
   }
 
   Dot(vector)
