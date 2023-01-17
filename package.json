@@ -1,6 +1,6 @@
 {
   "name": "js-physics-engine",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A physics engine made in javascript that supports polygon to polygon and polygon to circle collisions, with spring physics and stuff.",
   "main": "Index.js",
   "scripts": {
