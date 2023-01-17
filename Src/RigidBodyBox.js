@@ -36,6 +36,18 @@ class RigidBodyBox
     );
   }
 
+  Move(Displacement) {
+    this.Position = this.Position.Add(Displacement);
+
+    for (let i = 0; i < this.TransformedPoints.length; i++) {
+      this.TransformedPoints[i] = this.TransformedPoints[i].Add(Displacement);
+    }
+
+    for (let i = 0; i < this.OriginalPoints.length; i++) {
+      this.OriginalPoints[i] = this.OriginalPoints[i].Add(Displacement);
+    }
+  }
+
   Rotate(angle)
   {
     if (this.Rotation === angle) return;
