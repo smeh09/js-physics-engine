@@ -35,7 +35,7 @@ PolygonsContainer.appendChild(Box1Element);
 
 // Box 2
 const Box2Pos = new Vector2(350 - 10*Math.sqrt(2), 250);
-const Box2Width = 500;
+const Box2Width = 50;
 const Box2Height = 50;
 const Box2 = new RigidBodyBox(Box2Pos, Box2Width, Box2Height);
 const Box2Element = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
