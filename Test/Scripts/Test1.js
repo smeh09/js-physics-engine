@@ -91,17 +91,19 @@ function Update(Time)
   let Box1Velocity = new Vector2(0, 0);
 
   if (Box1MovingRight) {
-    Box1Velocity.x += Speed * DeltaTime;
+    Box1Velocity.x += 1;
   }
   if (Box1MovingLeft) {
-    Box1Velocity.x -= Speed * DeltaTime;
+    Box1Velocity.x -= 1;
   }
   if (Box1MovingUp) {
-    Box1Velocity.y -= Speed * DeltaTime;
+    Box1Velocity.y -= 1;
   }
   if (Box1MovingDown) {
-    Box1Velocity.y += Speed * DeltaTime;
+    Box1Velocity.y += 1;
   }
+
+  if (Box1Velocity.x !== 0 || Box1Velocity.y !== 0) { Box1Velocity.SetMag(Speed * DeltaTime); }
 
   Box1.Move(Box1Velocity);
 
