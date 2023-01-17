@@ -5,7 +5,6 @@ class RigidBodyBox
   constructor (Position, Width, Height)
   {
     this.Position = Position;
-    this.LinearVelocity = new Vector2(0, 0);
     this.Rotation = 0;
 
     this.Width = Width;
@@ -48,10 +47,10 @@ class RigidBodyBox
     }
   }
 
-  Rotate(angle)
+  Rotate(Angle)
   {
-    if (this.Rotation === angle) return;
-    this.Rotation = angle;
+    if (this.Rotation === Angle) return;
+    this.Rotation = Angle % (Math.PI * 2);
     
     for (let i = 0; i < this.OriginalPoints.length; i++)
     {

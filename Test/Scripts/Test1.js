@@ -1,4 +1,4 @@
-import { Vector2, RigidBodyBox, Collisions } from "../../Index.js";
+import { Vector2, RigidBodyBox, RigidBody, Collisions } from "../../Index.js";
 
 const Container = document.querySelector("#container");
 const PolygonsContainer = document.querySelector("#polygons-container");
@@ -45,6 +45,21 @@ Box2Element.style = `
   stroke-width: 1;
 `;
 PolygonsContainer.appendChild(Box2Element);
+
+// Polygon 1
+const Polygon1Points = [
+  new Vector2(50, 50),
+  new Vector2(100, 50),
+  new Vector2(75, 100),
+];
+const Polygon1 = new RigidBody(Polygon1Points);
+const Polygon1Element = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+Polygon1Element.style = `
+  fill: #1BCB6F;
+  stroke: black;
+  stroke-width: 1;
+`;
+PolygonsContainer.appendChild(Polygon1Element);
 
 // Box 1 movement
 let Box1MovingRight = false;
@@ -108,7 +123,8 @@ function Update(Time)
   Box1.Move(Box1Velocity);
 
   Box1.Rotate(Box1.Rotation + DeltaTime * -2);
-  Box2.Rotate(Box2.Rotation + DeltaTime * 1);
+  Box2.Rotate(Box2.Rotation + DeltaTime);
+  Polygon1.Rotate(Polygon1.Rotation + DeltaTime * 2)
 
   let CollisionResult = CollisionSystem.IntersectPolygons(Box1.TransformedPoints, Box2.TransformedPoints);
   if (CollisionResult.Collision)
@@ -121,32 +137,37 @@ function Update(Time)
       -CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
       -CollisionResult.Direction.y * CollisionResult.Depth * 0.5
     ));
+  }
 
-    Box2Element.style = `
-      fill: #1760DB;
-      stroke: red;
-      stroke-width: 1;
-    `;
-    Box1Element.style = `
-      fill: #C4A54D;
-      stroke: red;
-      stroke-width: 1;
-    `;
-  } else {
-    Box2Element.style = `
-      fill: #1760DB;
-      stroke: black;
-      stroke-width: 1;
-    `;
-    Box1Element.style = `
-      fill: #C4A54D;
-      stroke: black;
-      stroke-width: 1;
-    `;
+  CollisionResult = CollisionSystem.IntersectPolygons(Box1.TransformedPoints, Polygon1.TransformedPoints);
+  if (CollisionResult.Collision)
+  {
+    Box1.Move(new Vector2(
+      CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
+      CollisionResult.Direction.y * CollisionResult.Depth * 0.5
+    ));
+    Polygon1.Move(new Vector2(
+      -CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
+      -CollisionResult.Direction.y * CollisionResult.Depth * 0.5
+    ));
+  }
+
+  CollisionResult = CollisionSystem.IntersectPolygons(Box2.TransformedPoints, Polygon1.TransformedPoints);
+  if (CollisionResult.Collision)
+  {
+    Box2.Move(new Vector2(
+      CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
+      CollisionResult.Direction.y * CollisionResult.Depth * 0.5
+    ));
+    Polygon1.Move(new Vector2(
+      -CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
+      -CollisionResult.Direction.y * CollisionResult.Depth * 0.5
+    ));
   }
 
   UpdateRenderPoints(Box1, Box1Element);
   UpdateRenderPoints(Box2, Box2Element);
+  UpdateRenderPoints(Polygon1, Polygon1Element);
 
   requestAnimationFrame(Update);
 }
