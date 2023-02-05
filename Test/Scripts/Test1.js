@@ -1,4 +1,4 @@
-import { Vector2, RigidBodyBox, RigidBody, Collisions } from "../../Index.js";
+import { Vector2, RigidBodyBox, RigidBodyBall, RigidBody, Collisions } from "../../Index.js";
 
 const Container = document.querySelector("#container");
 const PolygonsContainer = document.querySelector("#polygons-container");
@@ -28,7 +28,7 @@ const Box1 = new RigidBodyBox(Box1Pos, Box1Width, Box1Height);
 const Box1Element = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
 Box1Element.style = `
   fill: #C4A54D;
-  stroke: black;
+  stroke: white;
   stroke-width: 1;
 `;
 PolygonsContainer.appendChild(Box1Element);
@@ -41,7 +41,7 @@ const Box2 = new RigidBodyBox(Box2Pos, Box2Width, Box2Height);
 const Box2Element = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
 Box2Element.style = `
   fill: #1760DB;
-  stroke: black;
+  stroke: white;
   stroke-width: 1;
 `;
 PolygonsContainer.appendChild(Box2Element);
@@ -49,24 +49,36 @@ PolygonsContainer.appendChild(Box2Element);
 // Polygon 1
 const Polygon1Points = [
   new Vector2(50, 50),
-  new Vector2(100, 50),
-  new Vector2(75, 100),
+  new Vector2(50, 100),
+  new Vector2(100, 100),
 ];
 const Polygon1 = new RigidBody(Polygon1Points);
 const Polygon1Element = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
 Polygon1Element.style = `
   fill: #1BCB6F;
-  stroke: black;
+  stroke: white;
   stroke-width: 1;
 `;
 PolygonsContainer.appendChild(Polygon1Element);
+
+const CirclePosition = new Vector2(570, 120);
+const Circle = new RigidBodyBall(CirclePosition, 25);
+const CircleElement = document.createElement("div");
+CircleElement.style.left = `${CirclePosition.x + Circle.Radius}px`;
+CircleElement.style.top = `${CirclePosition.y + Circle.Radius}px`;
+CircleElement.style.width = `${Circle.Radius * 2}px`;
+CircleElement.style.height = `${Circle.Radius * 2}px`;
+CircleElement.style.borderRadius = "50%";
+CircleElement.style.border = "1px solid white";
+CircleElement.style.background = "red";
+Container.appendChild(CircleElement);
 
 // Box 1 movement
 let Box1MovingRight = false;
 let Box1MovingLeft = false;
 let Box1MovingUp = false;
 let Box1MovingDown = false;
-const Speed = 200;
+const Speed = 100;
 
 document.addEventListener("keydown", (event) => {
   if (event.code === "KeyD") {
@@ -122,9 +134,9 @@ function Update(Time)
 
   Box1.Move(Box1Velocity);
 
-  Box1.Rotate(Box1.Rotation + DeltaTime * -2);
+  // Box1.Rotate(Box1.Rotation + DeltaTime * -2);
   Box2.Rotate(Box2.Rotation + DeltaTime);
-  Polygon1.Rotate(Polygon1.Rotation + DeltaTime * 2)
+  // Polygon1.Rotate(Polygon1.Rotation + DeltaTime * 2)
 
   let CollisionResult = CollisionSystem.IntersectPolygons(Box1.TransformedPoints, Box2.TransformedPoints);
   if (CollisionResult.Collision)
@@ -143,12 +155,8 @@ function Update(Time)
   if (CollisionResult.Collision)
   {
     Box1.Move(new Vector2(
-      CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
-      CollisionResult.Direction.y * CollisionResult.Depth * 0.5
-    ));
-    Polygon1.Move(new Vector2(
-      -CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
-      -CollisionResult.Direction.y * CollisionResult.Depth * 0.5
+      CollisionResult.Direction.x * CollisionResult.Depth,
+      CollisionResult.Direction.y * CollisionResult.Depth
     ));
   }
 
@@ -156,18 +164,30 @@ function Update(Time)
   if (CollisionResult.Collision)
   {
     Box2.Move(new Vector2(
-      CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
-      CollisionResult.Direction.y * CollisionResult.Depth * 0.5
+      CollisionResult.Direction.x * CollisionResult.Depth,
+      CollisionResult.Direction.y * CollisionResult.Depth
     ));
-    Polygon1.Move(new Vector2(
-      -CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
-      -CollisionResult.Direction.y * CollisionResult.Depth * 0.5
+  }
+
+  CollisionResult = CollisionSystem.IntersectPolygonCircle(Box1.TransformedPoints, Circle.Position, Circle.Radius);
+  if (CollisionResult.Collision)
+  {
+    Box1.Move(new Vector2(
+      CollisionResult.Direction.x * CollisionResult.Depth,
+      CollisionResult.Direction.y * CollisionResult.Depth,
     ));
+    
+    // Circle.Move(new Vector2(
+    //   CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
+    //   CollisionResult.Direction.y * CollisionResult.Depth * 0.5,
+    // ));
   }
 
   UpdateRenderPoints(Box1, Box1Element);
   UpdateRenderPoints(Box2, Box2Element);
   UpdateRenderPoints(Polygon1, Polygon1Element);
+  CircleElement.style.left = `${Circle.Position.x - Circle.Radius}px`;
+  CircleElement.style.top = `${Circle.Position.y - Circle.Radius}px`;
 
   requestAnimationFrame(Update);
 }

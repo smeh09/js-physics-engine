@@ -44,6 +44,11 @@ class Vector2
     this.y /= mag;
   }
 
+  Scale(Multiplier)
+  {
+    return new Vector2(this.x * Multiplier, this.y * Multiplier);
+  }
+
   SetMag(mag)
   {
     this.Normalize();

@@ -10,15 +10,16 @@ html, body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: black;
 }
 
 #container {
   width: 960px;
   height: 540px;
-  background-color: white;
+  background-color: black;
   position: relative;
   overflow: hidden;
-  border: 1px solid black;
+  border: 1px solid white;
 }
 
 #container > * {
