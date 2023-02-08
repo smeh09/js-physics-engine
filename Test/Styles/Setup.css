@@ -15,11 +15,11 @@ html, body {
 
 #container {
   width: 960px;
-  height: 540px;
+  height: 620px;
   background-color: black;
   position: relative;
   overflow: hidden;
-  border: 1px solid white;
+  border: 1px solid grey;
 }
 
 #container > * {

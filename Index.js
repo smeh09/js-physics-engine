@@ -3,7 +3,6 @@ import RigidBodyBox from "./Src/RigidBodyBox.js";
 import RigidBody from "./Src/RigidBody.js";
 import RigidBodyBall from "./Src/RigidBodyBall.js";
 import Collisions from "./Src/Collisions.js";
-import PhysicsWorld from "./Src/PhysicsWorld.js";
 
 export {
   Vector2,
@@ -11,5 +10,4 @@ export {
   RigidBodyBox,
   RigidBodyBall,
   Collisions,
-  PhysicsWorld
 };

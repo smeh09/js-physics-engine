@@ -14,6 +14,9 @@ class RigidBodyBox
     this.OriginalPoints = [];
 
     this.InitBox();
+
+    this.LinearVelocity = new Vector2(0, 0);
+    this.RotationalVelocity = 0;
   }
   
   InitBox ()
@@ -69,6 +72,12 @@ class RigidBodyBox
       this.TransformedPoints[i].x = RotatedPoint.x;
       this.TransformedPoints[i].y = RotatedPoint.y;
     }
+  }
+
+  Update (Deltatime)
+  {
+    this.Move(this.LinearVelocity.Scale(Deltatime));
+    this.Rotate(this.Rotation + this.RotationalVelocity * Deltatime);
   }
 }
 

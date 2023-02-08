@@ -173,14 +173,42 @@ function Update(Time)
   if (CollisionResult.Collision)
   {
     Box1.Move(new Vector2(
-      CollisionResult.Direction.x * CollisionResult.Depth,
-      CollisionResult.Direction.y * CollisionResult.Depth,
+      CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
+      CollisionResult.Direction.y * CollisionResult.Depth * 0.5,
     ));
     
-    // Circle.Move(new Vector2(
-    //   CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
-    //   CollisionResult.Direction.y * CollisionResult.Depth * 0.5,
-    // ));
+    Circle.Move(new Vector2(
+      -CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
+      -CollisionResult.Direction.y * CollisionResult.Depth * 0.5,
+    ));
+  }
+
+  CollisionResult = CollisionSystem.IntersectPolygonCircle(Box2.TransformedPoints, Circle.Position, Circle.Radius);
+  if (CollisionResult.Collision)
+  {
+    Box2.Move(new Vector2(
+      CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
+      CollisionResult.Direction.y * CollisionResult.Depth * 0.5,
+    ));
+    
+    Circle.Move(new Vector2(
+      -CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
+      -CollisionResult.Direction.y * CollisionResult.Depth * 0.5,
+    ));
+  }
+
+  CollisionResult = CollisionSystem.IntersectPolygonCircle(Polygon1.TransformedPoints, Circle.Position, Circle.Radius);
+  if (CollisionResult.Collision)
+  {
+    Polygon1.Move(new Vector2(
+      CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
+      CollisionResult.Direction.y * CollisionResult.Depth * 0.5,
+    ));
+    
+    Circle.Move(new Vector2(
+      -CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
+      -CollisionResult.Direction.y * CollisionResult.Depth * 0.5,
+    ));
   }
 
   UpdateRenderPoints(Box1, Box1Element);

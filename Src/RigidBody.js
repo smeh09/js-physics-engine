@@ -21,6 +21,9 @@ class RigidBody
       );
     }
     this.Rotation = 0;
+    
+    this.LinearVelocity = new Vector2(0, 0);
+    this.RotationalVelocity = 0;
   }
 
   Move (Displacement) {
@@ -34,7 +37,8 @@ class RigidBody
     }
   }
 
-  Rotate (Angle) {
+  Rotate (Angle)
+  {
     let SumX = 0;
     let SumY = 0;
 
@@ -63,6 +67,12 @@ class RigidBody
       this.TransformedPoints[i].x = RotatedPoint.x;
       this.TransformedPoints[i].y = RotatedPoint.y;
     }
+  }
+
+  Update (Deltatime)
+  {
+    this.Move(this.LinearVelocity.Scale(Deltatime));
+    this.Rotate(this.Rotation + this.RotationalVelocity * Deltatime);
   }
 }
 
