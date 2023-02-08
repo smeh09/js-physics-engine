@@ -76,7 +76,7 @@ Container.addEventListener('click', (event) => {
 
     const Object = new RigidBodyBox(new Vector2(mx, my), Width, Height);
     Object.LinearVelocity = new Vector2(0, GRAVITY);
-    Object.RotationalVelocity = Random(-5, 5);
+    // Object.RotationalVelocity = Random(-5, 5);
 
     Objects.push({
         Shape: 'Box',
@@ -89,6 +89,7 @@ function Update(Time)
 {
   DeltaTime = (Time - LastTime) / 1000;
   if (DeltaTime > 0.1) DeltaTime = 0.1;
+  if (DeltaTime < 0) DeltaTime = 0;
   LastTime = Time;
 
   BaseGround.Update(DeltaTime);
@@ -116,12 +117,8 @@ function Update(Time)
                 if (CollisionResult.Collision)
                 {
                     Object.Object.Move(new Vector2(
-                        CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
-                        CollisionResult.Direction.y * CollisionResult.Depth * 0.5,
-                    ));
-                    Object2.Object.Move(new Vector2(
-                        -CollisionResult.Direction.x * CollisionResult.Depth * 0.5,
-                        -CollisionResult.Direction.y * CollisionResult.Depth * 0.5,
+                        CollisionResult.Direction.x * CollisionResult.Depth,
+                        CollisionResult.Direction.y * CollisionResult.Depth,
                     ));
                     Object.Object.RotationalVelocity = 0;
                 }
